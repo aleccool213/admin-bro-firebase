@@ -37,7 +37,12 @@ const firestoreRepository = (
   },
 
   async create(record: DocumentType) {
-    const createdDocument = collection.doc();
+    let createdDocument;
+    if (record.id) {
+      createdDocument = collection.doc(record.id);   
+    } else {
+      createdDocument = collection.doc();   
+    }
     await createdDocument.set(record);
     return collection.doc(createdDocument.id).get();
   },
